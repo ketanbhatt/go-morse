@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 	"os"
 	"regexp"
+	"github.com/atotto/clipboard"
 )
 
 var textToMorseMap = map[string]string{
@@ -56,6 +56,9 @@ var textToMorseMap = map[string]string{
   " ": "/",
 }
 
+var morseToTextMap = reverseMap(textToMorseMap)
+var isMorse = regexp.MustCompile("^[.\\- \\/]*$").MatchString
+
 func reverseMap(originalMap map[string]string) map[string]string {
     revMap := make(map[string]string)
 
@@ -64,9 +67,6 @@ func reverseMap(originalMap map[string]string) map[string]string {
     }
     return revMap
 }
-
-var morseToTextMap = reverseMap(textToMorseMap)
-var isMorse = regexp.MustCompile("^[.\\- \\/]*$").MatchString
 
 func textToMorse(inputString string) string {
 	var tString []string
@@ -94,9 +94,13 @@ func morseToText(inputString string) string {
 func main() {
 	inputString := strings.ToLower(os.Args[1])
 
+	var tString string
+
 	if isMorse(inputString) {
-		fmt.Println(morseToText(inputString))
+		tString = morseToText(inputString)
 	} else {
-		fmt.Println(textToMorse(inputString))
+		tString = textToMorse(inputString)
 	}
+
+	clipboard.WriteAll(tString)
 }
