@@ -5,6 +5,7 @@ import (
 	"os"
 	"regexp"
 	"github.com/atotto/clipboard"
+	"github.com/fatih/color"
 )
 
 var textToMorseMap = map[string]string{
@@ -102,5 +103,9 @@ func main() {
 		tString = textToMorse(inputString)
 	}
 
+	color.Green(tString)
+	color.White("")
+
 	clipboard.WriteAll(tString)
+	color.Yellow("Translated string copied to clipboard!")
 }
