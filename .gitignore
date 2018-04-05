@@ -1,1 +1,4 @@
 .DS_Store
+
+# to avoid pushing the binary
+morseChat
